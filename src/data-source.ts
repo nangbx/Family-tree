@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "./entity/User";
+import { UserEntity, RelationEntity } from "./entity";
 
 export const AppDataSource = new DataSource({
 	type: "mysql",
@@ -11,7 +11,7 @@ export const AppDataSource = new DataSource({
 	database: "ceta",
 	synchronize: true,
 	logging: false,
-	entities: [User],
+	entities: [UserEntity, RelationEntity],
 	migrations: [],
 	subscribers: [],
 });

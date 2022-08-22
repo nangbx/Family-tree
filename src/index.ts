@@ -2,7 +2,6 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
-import { User } from "./entity/User";
 import * as dotenv from "dotenv";
 import { UserRouter } from "./routes";
 
