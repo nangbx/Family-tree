@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	OneToMany,
+	OneToOne,
+} from "typeorm";
 
 export enum UserGender {
 	MALE = "male",
@@ -30,4 +36,7 @@ export default class User {
 
 	@OneToMany(() => User, (user) => user.id, { onDelete: "CASCADE" })
 	wife?: User[];
+
+	@OneToMany(() => User, (user) => user.id)
+	parent?: User[];
 }

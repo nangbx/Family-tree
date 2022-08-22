@@ -1,4 +1,4 @@
-import { Application, Request, Router, Response } from "express";
+import { Application, Router } from "express";
 import { RelationController } from "../controller";
 
 const router = Router();
