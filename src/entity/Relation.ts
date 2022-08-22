@@ -3,10 +3,10 @@ import { Entity, PrimaryColumn, Column, OneToMany } from "typeorm";
 @Entity({ name: "relation" })
 export default class Relation {
 	@PrimaryColumn({ nullable: false })
-	ancestorId: number;
+	ancestorId: string;
 
 	@PrimaryColumn({ nullable: false })
-	descendantId: number;
+	descendantId: string;
 
 	@Column({ nullable: false })
 	depth: number;
