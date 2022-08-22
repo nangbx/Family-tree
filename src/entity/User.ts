@@ -7,8 +7,8 @@ export enum UserGender {
 }
 @Entity({ name: "user" })
 export default class User {
-	@PrimaryGeneratedColumn()
-	id: number;
+	@PrimaryGeneratedColumn("uuid")
+	id?: string;
 
 	@Column({ nullable: false })
 	name: string;
@@ -19,15 +19,15 @@ export default class User {
 	@Column()
 	image: string;
 
-	@Column({ nullable: false })
+	@Column({ nullable: false, unique: true })
 	phone: string;
 
-	@Column({ nullable: false })
+	@Column({ nullable: false, unique: true })
 	email: string;
 
 	@Column({ nullable: false })
 	password: string;
 
 	@OneToMany(() => User, (user) => user.id, { onDelete: "CASCADE" })
-	wife: User[];
+	wife?: User[];
 }
