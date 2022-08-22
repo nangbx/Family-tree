@@ -6,5 +6,5 @@ const router = Router();
 export default (app: Application) => {
 	app.use("/api/relation", router);
 
-	router.get("/", RelationController.getAllRelation);
+	router.get("/:id", RelationController.getRelation);
 };

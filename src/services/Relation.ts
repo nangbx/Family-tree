@@ -1,4 +1,4 @@
-import { RelationEntity } from "../entity";
+import { RelationEntity, UserEntity } from "../entity";
 import { AppDataSource } from "./../data-source";
 
 const getAll = async () => {
@@ -14,4 +14,13 @@ const save = async ({ id }: { id: string }) => {
 	return await Relation.save(node);
 };
 
-export default { getAll, save };
+const getTree = async ({ id }: { id: string }) => {
+	const Relation = AppDataSource.getRepository(RelationEntity);
+
+	return await Relation.query(
+		"SELECT * from relation as fr WHERE fr.ancestorId IN (SELECT fr.descendantId from relation as fr WHERE fr.ancestorId = :id) and fr.depth = 1",
+		[id]
+	);
+};
+
+export default { getAll, save, getTree };
