@@ -40,4 +40,4 @@ AppDataSource.initialize()
 			`Express server has started on port ${port}. Open http://localhost:${port} to see results`
 		);
 	})
-	.catch((error) => console.log(error));
+	.catch((error) => console.log({ error }));
