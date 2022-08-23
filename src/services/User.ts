@@ -12,10 +12,14 @@ const getAll = async () => {
 
 const getById = async (id: string) => {
 	const User = AppDataSource.getRepository(UserEntity);
-
-	const user = await User.findOne({ where: { id } });
-
-	return user;
+	try {
+		const [user] = await User.query(`Select * from user where user.id = ?`, [
+			id,
+		]);
+		return user;
+	} catch (e) {
+		console.log(e);
+	}
 };
 
 const save = async (user: UserEntity) => {

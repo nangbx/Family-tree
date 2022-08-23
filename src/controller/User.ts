@@ -13,6 +13,16 @@ const getAllUser = async (req: Request, res: Response) => {
 	}
 };
 
+const getUserById = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	try {
+		return res.status(200).json(await UserService.getById(id));
+	} catch (e) {
+		console.log(e);
+		ErrorHandling(res, e);
+	}
+};
+
 const createUser = async (req: Request, res: Response) => {
 	const { name, gender, image = "", phone, email, password } = req.body;
 	try {
@@ -75,4 +85,4 @@ const updateUser = async (req: Request, res: Response) => {
 	}
 };
 
-export default { getAllUser, createUser, updateUser };
+export default { getAllUser, createUser, updateUser, getUserById };

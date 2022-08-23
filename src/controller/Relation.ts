@@ -18,6 +18,7 @@ const getRelation = async (req: Request, res: Response) => {
 		}
 		return res.status(200).json(await RelationService.getTree({ id }));
 	} catch (e) {
+		console.log(e);
 		ErrorHandling(res, e);
 	}
 };

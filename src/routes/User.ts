@@ -9,6 +9,9 @@ export default (app: express.Application) => {
 	// Get all users
 	router.get("/", UserController.getAllUser);
 
+	// Get user by id
+	router.get("/:id", UserController.getUserById);
+
 	// Create new user
 	router.post("/create", UserController.createUser);
 
