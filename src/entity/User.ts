@@ -34,9 +34,12 @@ export default class User {
 	@Column({ nullable: false })
 	password: string;
 
-	@OneToMany(() => User, (user) => user.id, { onDelete: "CASCADE" })
-	wife?: User[];
-
 	@OneToMany(() => User, (user) => user.id)
-	parent?: User[];
+	pids: User[];
+
+	@OneToOne(() => User, (user) => user.id)
+	mid: User;
+
+	@OneToOne(() => User, (user) => user.id)
+	fid: User;
 }

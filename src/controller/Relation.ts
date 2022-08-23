@@ -2,6 +2,11 @@ import { Response } from "express";
 import { Request } from "express";
 import { ErrorHandling, RelationService, UserService } from "../services";
 
+export enum Relation {
+	PARENT = "parent",
+	WIFE = "wife",
+}
+
 const getRelation = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {

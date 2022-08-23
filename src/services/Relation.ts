@@ -23,4 +23,12 @@ const getTree = async ({ id }: { id: string }) => {
 	);
 };
 
+const createRelation = async ({
+	node1,
+	node2,
+}: {
+	node1: string;
+	node2: string;
+}) => {};
+
 export default { getAll, save, getTree };
