@@ -18,7 +18,7 @@ const getTree = async ({ id }: { id: string }) => {
 	const Relation = AppDataSource.getRepository(RelationEntity);
 
 	return await Relation.query(
-		"SELECT * from relation as fr WHERE fr.ancestorId IN (SELECT fr.descendantId from relation as fr WHERE fr.ancestorId = :id) and fr.depth = 1",
+		`SELECT * from relation as f WHERE f.ancestorId IN (SELECT fr.descendantId from relation as fr WHERE fr.ancestorId = ?) and f.depth = 1`,
 		[id]
 	);
 };
@@ -31,9 +31,8 @@ const createFidRelation = async ({
 	child: string;
 }) => {
 	const Relation = AppDataSource.getRepository(RelationEntity);
-
 	return await Relation.query(
-		`Insert into relation (ancestorId, descendantId, depth) Select supertree.ancestorId, subtree.descendantId, supertree.depth + subtree.depth + 1 from relation as supertree join relation as subtree where subtree.ancestorId = :child and supertree.descendantId = :parent`,
+		`Insert into relation (ancestorId, descendantId, depth) Select supertree.ancestorId, subtree.descendantId, supertree.depth + subtree.depth + 1 from relation as supertree join relation as subtree where subtree.ancestorId = ? and supertree.descendantId = ?`,
 		[child, parent]
 	);
 };
