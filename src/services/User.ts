@@ -30,4 +30,41 @@ const update = async (id: string, user: UserEntity) => {
 	return await User.update(id, user);
 };
 
-export default { getById, getAll, save, update };
+const createPidsRelation = async ({
+	node1,
+	node2,
+}: {
+	node1: UserEntity;
+	node2: UserEntity;
+}) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	node1["pids"].push(node2);
+	node2["pids"].push(node1);
+	const res = {
+		result1: {},
+		result2: {},
+	};
+	res.result1 = await User.update(node1.id, node1);
+	res.result2 = await User.update(node2.id, node2);
+	return res;
+};
+const createMidRelation = async ({
+	mother,
+	child,
+}: {
+	mother: UserEntity;
+	child: UserEntity;
+}) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["mid"] = mother;
+	return await User.update(child.id, child);
+};
+
+export default {
+	getById,
+	getAll,
+	save,
+	update,
+	createMidRelation,
+	createPidsRelation,
+};

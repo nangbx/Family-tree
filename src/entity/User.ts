@@ -35,11 +35,11 @@ export default class User {
 	password: string;
 
 	@OneToMany(() => User, (user) => user.id)
-	pids: User[];
+	pids?: User[];
 
 	@OneToOne(() => User, (user) => user.id)
-	mid: User;
+	mid?: User;
 
 	@OneToOne(() => User, (user) => user.id)
-	fid: User;
+	fid?: User;
 }

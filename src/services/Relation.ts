@@ -23,12 +23,19 @@ const getTree = async ({ id }: { id: string }) => {
 	);
 };
 
-const createRelation = async ({
-	node1,
-	node2,
+const createFidRelation = async ({
+	parent,
+	child,
 }: {
-	node1: string;
-	node2: string;
-}) => {};
+	parent: string;
+	child: string;
+}) => {
+	const Relation = AppDataSource.getRepository(RelationEntity);
 
-export default { getAll, save, getTree };
+	return await Relation.query(
+		`Insert into relation (ancestorId, descendantId, depth) Select supertree.ancestorId, subtree.descendantId, supertree.depth + subtree.depth + 1 from relation as supertree join relation as subtree where subtree.ancestorId = :child and supertree.descendantId = :parent`,
+		[child, parent]
+	);
+};
+
+export default { getAll, save, getTree, createFidRelation };
