@@ -1,4 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+	Entity,
+	PrimaryGeneratedColumn,
+	Column,
+	OneToMany,
+	OneToOne,
+	JoinColumn,
+	ManyToOne,
+	ManyToMany,
+} from "typeorm";
+import Pid from "./Pid";
 
 export enum UserGender {
 	MALE = "male",
@@ -28,6 +38,20 @@ export default class User {
 	@Column({ nullable: false })
 	password: string;
 
-	@OneToMany(() => User, (user) => user.id, { onDelete: "CASCADE" })
-	wife?: User[];
+	@OneToMany(() => Pid, (pids) => pids.pid)
+	pids?: Pid[];
+
+	@OneToOne(() => User, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
+	@JoinColumn({ name: "mid" })
+	mid?: User;
+
+	@OneToOne(() => User, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
+	@JoinColumn({ name: "fid" })
+	fid?: User;
 }

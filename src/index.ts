@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
 import * as dotenv from "dotenv";
-import { UserRouter } from "./routes";
+import { RelationRouter, UserRouter } from "./routes";
 
 AppDataSource.initialize()
 	.then(async () => {
@@ -16,6 +16,7 @@ AppDataSource.initialize()
 
 		// Routes
 		UserRouter(app);
+		RelationRouter(app);
 		// start express server
 		app.listen(port);
 

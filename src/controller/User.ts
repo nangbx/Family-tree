@@ -1,6 +1,6 @@
 import { UserSchema } from "./../validationSchema/index";
 import { Request, Response } from "express";
-import { ErrorHandling, UserService } from "../services";
+import { ErrorHandling, RelationService, UserService } from "../services";
 
 const getAllUser = async (req: Request, res: Response) => {
 	try {
@@ -35,7 +35,8 @@ const createUser = async (req: Request, res: Response) => {
 				email,
 				password,
 			});
-
+			const id = user.id;
+			await RelationService.save({ id });
 			return res.status(200).json(user);
 		}
 	} catch (e) {

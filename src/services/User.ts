@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
-import { UserEntity } from "../entity";
+import { PidEntity, UserEntity } from "../entity";
 import * as bcrypt from "bcrypt";
 
 const getAll = async () => {
@@ -30,4 +30,54 @@ const update = async (id: string, user: UserEntity) => {
 	return await User.update(id, user);
 };
 
-export default { getById, getAll, save, update };
+const createPidsRelation = async ({
+	node1,
+	node2,
+}: {
+	node1: UserEntity;
+	node2: UserEntity;
+}) => {
+	const Pid = AppDataSource.getRepository(PidEntity);
+	const result = [];
+	const _pid1 = new PidEntity();
+	_pid1["pid"] = node2.id;
+	_pid1["user"] = node1;
+	result.push(await Pid.save(_pid1));
+	const _pid2 = new PidEntity();
+	_pid2["pid"] = node1.id;
+	_pid2["user"] = node2;
+	result.push(await Pid.save(_pid2));
+	return result;
+};
+const createMidRelation = async ({
+	mother,
+	child,
+}: {
+	mother: UserEntity;
+	child: UserEntity;
+}) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["mid"] = mother;
+	return await User.update(child.id, child);
+};
+const createFidRelation = async ({
+	parent,
+	child,
+}: {
+	parent: UserEntity;
+	child: UserEntity;
+}) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["fid"] = parent;
+	return await User.update(child.id, child);
+};
+
+export default {
+	getById,
+	getAll,
+	save,
+	update,
+	createMidRelation,
+	createPidsRelation,
+	createFidRelation,
+};
