@@ -3,6 +3,7 @@ import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
 import * as dotenv from "dotenv";
+import * as cors from "cors";
 import { RelationRouter, UserRouter } from "./routes";
 
 AppDataSource.initialize()
@@ -11,6 +12,7 @@ AppDataSource.initialize()
 		dotenv.config();
 		const app = express();
 		const port = process.env.PORT;
+		app.use(cors());
 		app.use(bodyParser.json());
 		app.use(bodyParser.urlencoded({ extended: true }));
 

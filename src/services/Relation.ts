@@ -36,13 +36,21 @@ const getTree = async ({ id }: { id: string }) => {
 		for (const pid of pids) {
 			const _pidUser = await UserService.getById(pid.pid);
 			relation.push({
-				..._pidUser,
+				id: _pidUser.id,
+				name: _pidUser.name,
+				gender: _pidUser.gender,
+				mid: _pidUser.mid,
+				fid: _pidUser.fid,
 				pids: [id],
 			});
 			_userPids.push(pid.pid);
 		}
 		relation.push({
-			..._user,
+			id: _user.id,
+			name: _user.name,
+			gender: _user.gender,
+			mid: _user.mid,
+			fid: _user.fid,
 			pids: [..._userPids],
 		});
 	}
