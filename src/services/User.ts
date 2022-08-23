@@ -59,6 +59,17 @@ const createMidRelation = async ({
 	child["mid"] = mother;
 	return await User.update(child.id, child);
 };
+const createFidRelation = async ({
+	parent,
+	child,
+}: {
+	parent: UserEntity;
+	child: UserEntity;
+}) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["fid"] = parent;
+	return await User.update(parent.id, parent);
+};
 
 export default {
 	getById,
@@ -67,4 +78,5 @@ export default {
 	update,
 	createMidRelation,
 	createPidsRelation,
+	createFidRelation,
 };

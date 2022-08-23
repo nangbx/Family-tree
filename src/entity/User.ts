@@ -34,12 +34,21 @@ export default class User {
 	@Column({ nullable: false })
 	password: string;
 
-	@OneToMany(() => User, (user) => user.id)
+	@OneToMany(() => User, (user) => user.id, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	pids?: User[];
 
-	@OneToOne(() => User, (user) => user.id)
+	@OneToOne(() => User, (user) => user.id, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	mid?: User;
 
-	@OneToOne(() => User, (user) => user.id)
+	@OneToOne(() => User, (user) => user.id, {
+		onDelete: "CASCADE",
+		onUpdate: "CASCADE",
+	})
 	fid?: User;
 }
