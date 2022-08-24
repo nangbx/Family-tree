@@ -16,5 +16,5 @@ export default (app: express.Application) => {
 	router.post("/create", UserController.createUser);
 
 	// Update user
-	router.post("/:id/update", UserController.updateUser);
+	router.put("/:id/update", UserController.updateUser);
 };
