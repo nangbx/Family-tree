@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { Request } from "express";
+import { UserEntity } from "../entity";
 import { ErrorHandling, RelationService, UserService } from "../services";
 
 export enum Relation {
@@ -91,9 +92,34 @@ const createParentChildRelation = async (req: Request, res: Response) => {
 		ErrorHandling(res, e);
 	}
 };
+const deleteMotherChildRelation = async (req: Request, res: Response) => {
+	const { mother, child } = req.body;
+	try {
+		const Mother = await UserService.getById(mother);
+		const Child = await UserService.getById(child);
+		if (!Mother || !Child) {
+			return res.status(400).json({
+				message: "Not found!",
+			});
+		}
+		if (Child["mid"] !== Mother.id) {
+			return res.status(400).json({
+				message: "No relationship!",
+			});
+		}
+		return res
+			.status(200)
+			.json(await UserService.deleteMidRelation({ child: Child }));
+	} catch (e) {
+		console.log(e);
+		ErrorHandling(res, e);
+	}
+};
+
 export default {
 	getRelation,
 	createMotherChildRelation,
 	createHusbandWifeRelation,
 	createParentChildRelation,
+	deleteMotherChildRelation,
 };

@@ -48,7 +48,7 @@ export default class User {
 	@JoinColumn({ name: "mid" })
 	mid?: User;
 
-	@OneToOne(() => User, {
+	@ManyToOne(() => User, (user) => user.id, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})

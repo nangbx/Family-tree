@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { PidEntity, UserEntity } from "../entity";
 import * as bcrypt from "bcrypt";
+import { string } from "yup";
 
 const getAll = async () => {
 	const User = AppDataSource.getRepository(UserEntity);
@@ -76,6 +77,12 @@ const createFidRelation = async ({
 	return await User.update(child.id, child);
 };
 
+const deleteMidRelation = async ({ child }: { child: UserEntity }) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["mid"] = null;
+	return await User.update(child.id, child);
+};
+
 export default {
 	getById,
 	getAll,
@@ -84,4 +91,5 @@ export default {
 	createMidRelation,
 	createPidsRelation,
 	createFidRelation,
+	deleteMidRelation,
 };
