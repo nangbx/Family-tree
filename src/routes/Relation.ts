@@ -20,4 +20,7 @@ export default (app: Application) => {
 
 	// Delete mother-child relationship
 	router.delete("/midRelation", RelationController.deleteMotherChildRelation);
+
+	// Delete parent-child relationship
+	router.delete("/fidRelation", RelationController.deleteParentChildRelation);
 };

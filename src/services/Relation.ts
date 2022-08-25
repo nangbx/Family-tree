@@ -1,3 +1,4 @@
+import { string } from "yup";
 import { UserService } from ".";
 import { PidEntity, RelationEntity, UserEntity } from "../entity";
 import { AppDataSource } from "./../data-source";
@@ -71,5 +72,9 @@ const createFidRelation = async ({
 		[child, parent]
 	);
 };
+
+const deleteFidRelation = async ({parent, child} : {parent: string, child: string}) => {
+	
+}
 
 export default { getAll, save, getTree, createFidRelation };

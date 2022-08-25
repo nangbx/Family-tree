@@ -116,10 +116,17 @@ const deleteMotherChildRelation = async (req: Request, res: Response) => {
 	}
 };
 
+const deleteParentChildRelation = async (req: Request, res: Response) => {
+	return res.json({
+		message: "",
+	});
+};
+
 export default {
 	getRelation,
 	createMotherChildRelation,
 	createHusbandWifeRelation,
 	createParentChildRelation,
 	deleteMotherChildRelation,
+	deleteParentChildRelation,
 };
