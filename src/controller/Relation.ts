@@ -117,9 +117,31 @@ const deleteMotherChildRelation = async (req: Request, res: Response) => {
 };
 
 const deleteParentChildRelation = async (req: Request, res: Response) => {
-	return res.json({
-		message: "",
-	});
+	const { child, parent } = req.body;
+	try {
+		const Child = await UserService.getById(child);
+		const Parent = await UserService.getById(parent);
+		if (!Child || !Parent) {
+			return res.status(400).json({
+				message: "Not found!",
+			});
+		}
+		if (Child.fid !== Parent.id) {
+			return res.json({
+				message: "Not relationship",
+			});
+		}
+		await UserService.deleteFidRelation({ child: Child });
+		return res.status(200).json(
+			await RelationService.deleteFidRelation({
+				parent,
+				child,
+			})
+		);
+	} catch (e) {
+		console.log(e);
+		ErrorHandling(res, e);
+	}
 };
 const deltePidRelation = async (req: Request, res: Response) => {
 	const { user1, user2 } = req.body;

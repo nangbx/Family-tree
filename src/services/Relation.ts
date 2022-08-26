@@ -73,8 +73,19 @@ const createFidRelation = async ({
 	);
 };
 
-const deleteFidRelation = async ({parent, child} : {parent: string, child: string}) => {
-	
-}
+const deleteFidRelation = async ({
+	parent,
+	child,
+}: {
+	parent: string;
+	child: string;
+}) => {
+	const Relation = AppDataSource.getRepository(RelationEntity);
 
-export default { getAll, save, getTree, createFidRelation };
+	return await Relation.query(
+		`DELETE FROM relation WHERE descendantId IN (SELECT descendantId FROM relation WHERE ancestorId = ?) AND ancestorId NOT IN (SELECT descendantId FROM relation WHERE ancestorId = ?) AND ancestorId IN (SELECT descendantId FROM relation AS f1 INNER JOIN (Select ancestorId from relation as fr WHERE fr.descendantId = ? ORDER By depth DESC LIMIT 1) AS f2  ON f1.ancestorId = f2.ancestorId)`,
+		[child, child, child]
+	);
+};
+
+export default { getAll, save, getTree, createFidRelation, deleteFidRelation };

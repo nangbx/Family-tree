@@ -95,6 +95,11 @@ const deletePidRelation = async ({
 		[node1, node2, node2, node1]
 	);
 };
+const deleteFidRelation = async ({ child }: { child: UserEntity }) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	child["fid"] = null;
+	return await User.update(child.id, child);
+};
 
 export default {
 	getById,
@@ -106,4 +111,5 @@ export default {
 	createFidRelation,
 	deleteMidRelation,
 	deletePidRelation,
+	deleteFidRelation,
 };
