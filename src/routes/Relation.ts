@@ -23,4 +23,7 @@ export default (app: Application) => {
 
 	// Delete parent-child relationship
 	router.delete("/fidRelation", RelationController.deleteParentChildRelation);
+
+	// Delete husband-wife relationship
+	router.delete("/pidsRelation", RelationController.deltePidRelation);
 };

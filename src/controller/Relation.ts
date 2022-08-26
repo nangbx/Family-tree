@@ -121,6 +121,27 @@ const deleteParentChildRelation = async (req: Request, res: Response) => {
 		message: "",
 	});
 };
+const deltePidRelation = async (req: Request, res: Response) => {
+	const { user1, user2 } = req.body;
+	try {
+		const User1 = await UserService.getById(user1);
+		const User2 = await UserService.getById(user2);
+		if (!User1 || !User2) {
+			return res.status(400).json({
+				message: "Not found!",
+			});
+		}
+
+		return res
+			.status(200)
+			.json(
+				await UserService.deletePidRelation({ node1: user1, node2: user2 })
+			);
+	} catch (e) {
+		console.log(e);
+		ErrorHandling(res, e);
+	}
+};
 
 export default {
 	getRelation,
@@ -129,4 +150,5 @@ export default {
 	createParentChildRelation,
 	deleteMotherChildRelation,
 	deleteParentChildRelation,
+	deltePidRelation,
 };
