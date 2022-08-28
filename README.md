@@ -1,6 +1,11 @@
-# Awesome Project Build with TypeORM
+# Family tree
 
-Steps to run this project:
+- MySQL
+- Express
+- Typeorm
+- Typescript
+
+## Steps to run this project:
 
 1. Run `npm i` command
 2. Setup database settings inside `data-source.ts` file
