@@ -4,11 +4,11 @@ import { UserEntity, RelationEntity, PidEntity } from "./entity";
 
 export const AppDataSource = new DataSource({
 	type: "mysql",
-	host: "localhost",
-	port: 3306,
+	host: process.env.DATABASE_HOST,
+	port: Number.parseInt(process.env.DATABASE_PORT || "3306"),
 	username: "root",
 	password: "",
-	database: "ceta",
+	database: "tree",
 	synchronize: true,
 	logging: false,
 	entities: [UserEntity, RelationEntity, PidEntity],
