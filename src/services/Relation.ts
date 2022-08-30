@@ -42,6 +42,7 @@ const getTree = async ({ id }: { id: string }) => {
 				gender: _pidUser.gender,
 				mid: _pidUser.mid,
 				fid: _pidUser.fid,
+				status: _pidUser.status,
 				pids: [id],
 			});
 			_userPids.push(pid.pid);
@@ -52,6 +53,7 @@ const getTree = async ({ id }: { id: string }) => {
 			gender: _user.gender,
 			mid: _user.mid,
 			fid: _user.fid,
+			status: _user.status,
 			pids: [..._userPids],
 		});
 	}
@@ -69,6 +71,7 @@ const getTree = async ({ id }: { id: string }) => {
 				gender: _pidUser.gender,
 				mid: _pidUser.mid,
 				fid: _pidUser.fid,
+				status: _pidUser.status,
 				pids: [id],
 			});
 			_userPids.push(pid.pid);
@@ -79,6 +82,7 @@ const getTree = async ({ id }: { id: string }) => {
 			gender: _user.gender,
 			mid: _user.mid,
 			fid: _user.fid,
+			status: _user.status,
 			pids: [..._userPids],
 		});
 	}
