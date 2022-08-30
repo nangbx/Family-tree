@@ -50,6 +50,7 @@ const createUser = async (req: Request, res: Response) => {
 			return res.status(200).json(user);
 		}
 	} catch (e) {
+		console.log(e);
 		ErrorHandling(res, e);
 	}
 };

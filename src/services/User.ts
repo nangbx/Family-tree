@@ -25,7 +25,10 @@ const getById = async (id: string) => {
 
 const save = async (user: UserEntity) => {
 	const User = AppDataSource.getRepository(UserEntity);
-	const salt = bcrypt.hashSync(user.password, "10");
+	const salt = bcrypt.hashSync(
+		user.password,
+		"$2a$10$7h/0SQ4FXRG5eX3602o3/.aO.RYkxKuhGkzvIXHLUiMJlFt1P.6Pe"
+	);
 	return await User.save({ ...user, password: salt });
 };
 
