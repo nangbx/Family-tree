@@ -55,7 +55,33 @@ const getTree = async ({ id }: { id: string }) => {
 			pids: [..._userPids],
 		});
 	}
-
+	if (relation.length === 0) {
+		const _user = await UserService.getById(id);
+		const pids = await Pid.query(`Select pid from pids where userId = ?`, [
+			_user.id,
+		]);
+		const _userPids = [];
+		for (const pid of pids) {
+			const _pidUser = await UserService.getById(pid.pid);
+			relation.push({
+				id: _pidUser.id,
+				name: _pidUser.name,
+				gender: _pidUser.gender,
+				mid: _pidUser.mid,
+				fid: _pidUser.fid,
+				pids: [id],
+			});
+			_userPids.push(pid.pid);
+		}
+		relation.push({
+			id: _user.id,
+			name: _user.name,
+			gender: _user.gender,
+			mid: _user.mid,
+			fid: _user.fid,
+			pids: [..._userPids],
+		});
+	}
 	return relation;
 };
 
