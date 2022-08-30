@@ -15,6 +15,10 @@ export enum UserGender {
 	FEMALE = "female",
 	OTHER = "other",
 }
+export enum UserStatus {
+	LIVING = "living",
+	DECEASED = "deceased",
+}
 @Entity({ name: "user" })
 export default class User {
 	@PrimaryGeneratedColumn("uuid")
@@ -37,6 +41,9 @@ export default class User {
 
 	@Column({ nullable: false })
 	password: string;
+
+	@Column({ type: "enum", enum: UserStatus })
+	status?: UserStatus;
 
 	@OneToMany(() => Pid, (pids) => pids.pid)
 	pids?: Pid[];
