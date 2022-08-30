@@ -17,4 +17,7 @@ export default (app: express.Application) => {
 
 	// Update user
 	router.put("/:id/update", UserController.updateUser);
+
+	// Update user status
+	router.put("/:id/updateStatus", UserController.updateStatus);
 };

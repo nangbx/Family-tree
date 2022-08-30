@@ -3,6 +3,7 @@ import { AppDataSource } from "../data-source";
 import { PidEntity, UserEntity } from "../entity";
 import * as bcrypt from "bcrypt";
 import { string } from "yup";
+import { UserStatus } from "../entity/User";
 
 const getAll = async () => {
 	const User = AppDataSource.getRepository(UserEntity);
@@ -102,12 +103,18 @@ const deleteFidRelation = async ({ child }: { child: UserEntity }) => {
 	child["fid"] = null;
 	return await User.update(child.id, child);
 };
+const updateStatus = async (_user, status: UserStatus) => {
+	const User = AppDataSource.getRepository(UserEntity);
+	_user.status = status;
+	return await User.update(_user.id, _user);
+};
 
 export default {
 	getById,
 	getAll,
 	save,
 	update,
+	updateStatus,
 	createMidRelation,
 	createPidsRelation,
 	createFidRelation,

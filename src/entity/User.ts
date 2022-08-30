@@ -42,7 +42,7 @@ export default class User {
 	@Column({ nullable: false })
 	password: string;
 
-	@Column({ type: "enum", enum: UserStatus })
+	@Column({ type: "enum", enum: UserStatus, default: UserStatus.LIVING })
 	status?: UserStatus;
 
 	@OneToMany(() => Pid, (pids) => pids.pid)
