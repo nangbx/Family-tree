@@ -9,4 +9,6 @@ export default (app: Express.Application) => {
 	router.post("/add", RoleController.addRoleForUser);
 
 	router.put("/update", RoleController.updateRole);
+
+	router.get("/:user", RoleController.getRoleById);
 };

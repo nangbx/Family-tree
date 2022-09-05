@@ -1,6 +1,16 @@
 import { Request, Response } from "express";
 import { ErrorHandling, RoleService, UserService } from "../services";
 
+const getRoleById = async (req: Request, res: Response) => {
+	const { user } = req.params;
+	try {
+		return res.json(await RoleService.getById({ user }));
+	} catch (e) {
+		console.log(e);
+		ErrorHandling(res, e);
+	}
+};
+
 const addRoleForUser = async (req: Request, res: Response) => {
 	const { user, role } = req.body;
 	try {
@@ -11,7 +21,7 @@ const addRoleForUser = async (req: Request, res: Response) => {
 			});
 		}
 		return res.status(200).json({
-			message: await RoleService.save({ user, role }),
+			message: await RoleService.save({ user: _user, role }),
 		});
 	} catch (e) {
 		console.log(e);
@@ -27,6 +37,7 @@ const updateRole = async (req: Request, res: Response) => {
 				message: "Not found!",
 			});
 		}
+		console.log(_user);
 		return res.status(200).json({
 			message: await RoleService.update({ user, role }),
 		});
@@ -39,4 +50,5 @@ const updateRole = async (req: Request, res: Response) => {
 export default {
 	addRoleForUser,
 	updateRole,
+	getRoleById,
 };

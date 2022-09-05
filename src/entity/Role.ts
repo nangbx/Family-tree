@@ -12,12 +12,12 @@ import User from "./User";
 
 @Entity({ name: "role" })
 export default class Role {
-	@PrimaryGeneratedColumn("uuid")
-	id?: string;
+	@PrimaryColumn()
+	userId: string;
 
-	@OneToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
-	@JoinColumn()
-	user: string;
+	@OneToOne(() => User, { onDelete: "CASCADE" })
+	@JoinColumn({ name: "userId" })
+	user: User;
 
 	@Column({ nullable: false })
 	role: string;
