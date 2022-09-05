@@ -8,6 +8,7 @@ interface Data {
 	mid: string;
 	fid: string;
 	gender: UserGender;
+	dob: Date;
 }
 interface Response {
 	status: boolean;
@@ -101,7 +102,6 @@ const checkOtherRelationship = async (
 			[root, user2.id]
 		);
 		const path2 = res2[0];
-
 		if (path1.depth === 0 || path2.depth === 0) {
 			if (path1.depth === 0) {
 				const depth = path2.depth;
@@ -141,6 +141,18 @@ const checkOtherRelationship = async (
 							message: `${user2.name} - ${user1.name}: Kị - chắt`,
 						};
 				}
+			}
+		} else if (path1.depth === 1 && path2.depth === 1) {
+			if (user1.dob > user2.dob) {
+				return {
+					status: true,
+					message: `${user1.name} - ${user2.name}: Anh - em`,
+				};
+			} else {
+				return {
+					status: true,
+					message: `${user2.name} - ${user1.name}: Anh - em`,
+				};
 			}
 		}
 
