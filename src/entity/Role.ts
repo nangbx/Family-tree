@@ -6,6 +6,7 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	OneToOne,
+	JoinColumn,
 } from "typeorm";
 import User from "./User";
 
@@ -15,6 +16,7 @@ export default class Role {
 	id?: string;
 
 	@OneToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
+	@JoinColumn()
 	user: string;
 
 	@Column({ nullable: false })

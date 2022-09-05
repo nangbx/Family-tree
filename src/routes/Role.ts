@@ -7,4 +7,6 @@ export default (app: Express.Application) => {
 	app.use("/api/role", router);
 
 	router.post("/add", RoleController.addRoleForUser);
+
+	router.put("/update", RoleController.updateRole);
 };
