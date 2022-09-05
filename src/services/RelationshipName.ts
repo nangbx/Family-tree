@@ -85,6 +85,12 @@ const checkOtherRelationship = async (
 		`SELECT fr.ancestorId as id from relation as fr WHERE fr.descendantId = ? AND fr.ancestorId IN (SELECT fr.ancestorId from relation as fr WHERE fr.descendantId = ?)`,
 		[user1.id, user2.id]
 	);
+	if (user1.id === user2.id) {
+		return {
+			status: true,
+			message: "Duplicate node",
+		};
+	}
 	if (res.length === 0) {
 		return {
 			status: false,
@@ -102,6 +108,11 @@ const checkOtherRelationship = async (
 			[root, user2.id]
 		);
 		const path2 = res2[0];
+		console.log({
+			path1,
+			path2,
+			root,
+		});
 		if (path1.depth === 0 || path2.depth === 0) {
 			if (path1.depth === 0) {
 				const depth = path2.depth;

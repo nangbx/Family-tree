@@ -4,7 +4,12 @@ import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
 import * as dotenv from "dotenv";
 import * as cors from "cors";
-import { RealtionshipNameRouter, RelationRouter, UserRouter } from "./routes";
+import {
+	RealtionshipNameRouter,
+	RelationRouter,
+	RoleRouter,
+	UserRouter,
+} from "./routes";
 
 AppDataSource.initialize()
 	.then(async () => {
@@ -20,6 +25,7 @@ AppDataSource.initialize()
 		UserRouter(app);
 		RelationRouter(app);
 		RealtionshipNameRouter(app);
+		RoleRouter(app);
 		// start express server
 		app.listen(port);
 
