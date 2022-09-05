@@ -165,6 +165,7 @@ const checkOtherRelationship = async (
 					message: `${user2.name} - ${user1.name}: Anh - em`,
 				};
 			}
+		} else if (path1.depth === path2.depth) {
 		}
 
 		return {
