@@ -1,10 +1,19 @@
 import { Request, Response } from "express";
-import { ErrorHandling } from "../services";
+import { ErrorHandling, RoleService, UserService } from "../services";
+import Role from "../services/Role";
 
 const addRoleForUser = async (req: Request, res: Response) => {
-	const { id, role } = req.body;
+	const { user, role } = req.body;
 	try {
-		return res.json({ message: "Hello world!" });
+		const _user = await UserService.getById(user);
+		if (!_user) {
+			return res.status(400).json({
+				message: "Not found!",
+			});
+		}
+		return res.status(200).json({
+			message: await RoleService.save({ user, role }),
+		});
 	} catch (e) {
 		console.log(e);
 		ErrorHandling(res, e);

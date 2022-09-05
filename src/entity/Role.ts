@@ -15,7 +15,7 @@ export default class Role {
 	id?: string;
 
 	@OneToOne(() => User, (user) => user.id, { onDelete: "CASCADE" })
-	user: User;
+	user: string;
 
 	@Column({ nullable: false })
 	role: string;
