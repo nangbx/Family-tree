@@ -45,6 +45,9 @@ export default class User {
 	@Column({ type: "enum", enum: UserStatus, default: UserStatus.LIVING })
 	status?: UserStatus;
 
+	@Column({ type: "date", default: () => "NOW()" })
+	dob: string;
+
 	@OneToMany(() => Pid, (pids) => pids.pid)
 	pids?: Pid[];
 

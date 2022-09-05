@@ -24,7 +24,7 @@ const getUserById = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
-	const { name, gender, image = "", phone, email, password } = req.body;
+	const { name, gender, image = "", phone, email, password, dob } = req.body;
 	try {
 		const isValid = UserSchema.isValidSync({
 			user: {
@@ -34,6 +34,7 @@ const createUser = async (req: Request, res: Response) => {
 				phone,
 				email,
 				password,
+				dob,
 			},
 		});
 		if (isValid) {
@@ -44,6 +45,7 @@ const createUser = async (req: Request, res: Response) => {
 				phone,
 				email,
 				password,
+				dob,
 			});
 			const id = user.id;
 			await RelationService.save({ id });
@@ -56,7 +58,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const updateUser = async (req: Request, res: Response) => {
-	const { name, gender, image = "", phone, email, password } = req.body;
+	const { name, gender, image = "", phone, email, password, dob } = req.body;
 	const { id } = req.params;
 	try {
 		const isValid = UserSchema.isValidSync({
@@ -67,6 +69,7 @@ const updateUser = async (req: Request, res: Response) => {
 				phone,
 				email,
 				password,
+				dob,
 			},
 		});
 		if (isValid) {
@@ -77,6 +80,7 @@ const updateUser = async (req: Request, res: Response) => {
 				phone,
 				email,
 				password,
+				dob,
 			});
 
 			return res.status(200).json(user);
