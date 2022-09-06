@@ -51,7 +51,7 @@ export default class User {
 	@OneToMany(() => Pid, (pids) => pids.pid)
 	pids?: Pid[];
 
-	@OneToOne(() => User, {
+	@ManyToOne(() => User, (user) => user.id, {
 		onDelete: "CASCADE",
 		onUpdate: "CASCADE",
 	})
