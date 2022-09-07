@@ -16,10 +16,7 @@ const getRelationshipName = async (req: Request, res: Response) => {
 			});
 		}
 		return res.status(200).json({
-			relation: await RelationshipNameService.checkRelationshipName(
-				_user1,
-				_user2
-			),
+			relation: await RelationshipNameService.checkRelationship(_user1, _user2),
 		});
 	} catch (e) {
 		console.log(e);

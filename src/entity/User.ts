@@ -46,7 +46,7 @@ export default class User {
 	status?: UserStatus;
 
 	@Column({ type: "date", default: () => "NOW()" })
-	dob: string;
+	dob: Date;
 
 	@OneToMany(() => Pid, (pids) => pids.pid)
 	pids?: Pid[];
