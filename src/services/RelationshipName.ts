@@ -299,40 +299,42 @@ const checkRelationship: Function = async (
 	}
 	let _user1 = user1;
 	let _user2 = user2;
-	let subCodeFemale: string = "";
+	let subCode: string = "";
 	if (
 		user1.gender === UserGender.FEMALE ||
 		user2.gender === UserGender.FEMALE
 	) {
-		var check: boolean = false;
-		if (
-			user1.gender === UserGender.FEMALE &&
-			user2.gender === UserGender.FEMALE
-		) {
-			subCodeFemale = "11";
-			check = true;
-		}
 		if (user1.gender === UserGender.FEMALE) {
-			if (!check) subCodeFemale = "10";
 			let res = await Relation.query(
 				`SELECT * FROM user WHERE id in (SELECT userId as id FROM pids WHERE pid = ?)`,
 				[user1.id]
 			);
+
 			user1 = res[0];
+		} else {
+			user1 = null;
 		}
 		if (user2.gender === UserGender.FEMALE) {
-			if (!check) subCodeFemale = "01";
 			let res = await Relation.query(
 				`SELECT * FROM user WHERE id in (SELECT userId as id FROM pids WHERE pid = ?)`,
 				[user2.id]
 			);
 			user2 = res[0];
+		} else {
+			user2 = null;
+		}
+		if (user1 && user2) {
+			subCode = "11";
 		}
 		if (!user1) {
 			user1 = _user1;
+		} else {
+			subCode = "01";
 		}
 		if (!user2) {
 			user2 = _user2;
+		} else {
+			subCode = "10";
 		}
 	}
 
@@ -358,19 +360,19 @@ const checkRelationship: Function = async (
 	let subCode1 = "0";
 	let subCode2 = "0";
 
-	if (subCodeFemale == "10") {
+	if (subCode == "10") {
 		let tmp = _user1;
 		_user1 = user1;
 		user1 = tmp;
 		subCode1 = "1";
 	}
-	if (subCodeFemale == "01") {
+	if (subCode == "01") {
 		let tmp = _user2;
 		_user2 = user2;
 		user2 = tmp;
 		subCode2 = "1";
 	}
-	if (subCodeFemale == "11") {
+	if (subCode == "11") {
 		let tmp = _user2;
 		_user2 = user2;
 		user2 = tmp;
@@ -395,25 +397,29 @@ const checkRelationship: Function = async (
 				return handleCode("00", user2, user1, subCode2);
 			}
 		} else {
-			var leaf1 = await Relation.query(
+			console.log(root);
+
+			var leaf1 = await User.query(
 				`SELECT * FROM user WHERE fid = ? and id in (SELECT ancestorId as id FROM relation WHERE descendantId = ?)`,
-				[root, user1.id]
+				[root.id, user1.id]
 			);
-			var leaf2 = await Relation.query(
+			var leaf2 = await User.query(
 				`SELECT * FROM user WHERE fid = ? and id in (SELECT ancestorId as id FROM relation WHERE descendantId = ?)`,
-				[root, user2.id]
+				[root.id, user2.id]
 			);
 			leaf1 = leaf1[0];
 			leaf2 = leaf2[0];
+			console.log(leaf1);
 			if (leaf1.dob > leaf2.dob) {
-				return handleCode("00", user1, user2);
+				return handleCode("00", user1, user2, subCode1);
 			} else {
-				return handleCode("00", user2, user1);
+				return handleCode("00", user2, user1, subCode2);
 			}
 		}
 	}
 
 	// - Cô chú, bác: Xác định từ dob của ba và dob của id cô/chú/bác/gì
+
 	if (path1.depth - path2.depth === 1 || path2.depth - path1.depth === 1) {
 		if (path1.depth - path2.depth === 1) {
 			let parent = await User.query(`Select * from user where id = ?`, [
